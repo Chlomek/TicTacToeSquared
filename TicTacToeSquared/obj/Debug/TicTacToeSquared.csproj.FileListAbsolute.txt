@@ -1,0 +1,7 @@
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\bin\Debug\TicTacToeSquared.exe.config
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\bin\Debug\TicTacToeSquared.exe
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\bin\Debug\TicTacToeSquared.pdb
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\obj\Debug\TicTacToeSquared.csproj.AssemblyReference.cache
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\obj\Debug\TicTacToeSquared.csproj.CoreCompileInputs.cache
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\obj\Debug\TicTacToeSquared.exe
+C:\Users\marek\OneDrive\_Code\SchoolProjects\TicTacToeSquared\TicTacToeSquared\obj\Debug\TicTacToeSquared.pdb
