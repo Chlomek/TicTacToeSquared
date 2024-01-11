@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TicTacToeSquared
@@ -13,10 +14,11 @@ namespace TicTacToeSquared
         {
             //Getting stuck on full square
             //Game Draw
+            //Bot drawing on full square -- give 10 tries to bot
             Random rnd = new Random();
             int[,] squares = new int[9, 9];
             int turn = 1, activeSquare = 9, userInput = 9, winner = 0, gameMode = 0, difficulty = 1;
-            bool success = false, end = false, numPad = false, skip = false;
+            bool success = false, end = false, numPad = false, skip = false, animations = true;
             string player1 = "JendaZeZatáčky", player2 = "BowlingovaKoule";
 
             Console.WriteLine("Choose gamemode: Singleplayer / Multiplayer");
@@ -35,13 +37,16 @@ namespace TicTacToeSquared
                 {
                     gameMode = 1;
                     skip = true;
+                    difficulty = 2;
                 }
                 else if (playerMode.ToLower() == "pre2")
                 {
                     gameMode = 1;
                     skip = true;
                     numPad = true;
+                    difficulty = 2;
                 }
+
                 else
                 {
                     Console.WriteLine("Wrong input");
@@ -67,7 +72,7 @@ namespace TicTacToeSquared
                 }
             }
 
-            if(skip == false)
+            if (skip == false)
             {
                 Console.WriteLine("Vyberte jméno hráče 1:");
                 player1 = Console.ReadLine();
@@ -76,8 +81,18 @@ namespace TicTacToeSquared
                     Console.WriteLine("Vyberte jméno hráče 2:");
                     player2 = Console.ReadLine();
                 }
+                else
+                {
+                    if (difficulty == 1)
+                    {
+                        player2 = "Easy bot";
+                    }
+                    else if (difficulty == 2)
+                    {
+                        player2 = "Medium bot";
+                    }
+                }
             }
-
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
@@ -179,6 +194,15 @@ namespace TicTacToeSquared
                         if (squares[activeSquare, userInput] != 0)
                         {
                             success = false;
+                        }
+                        else if (animations == true)
+                        {
+                            Thread.Sleep(1000);
+                            squares[activeSquare, userInput] = turn;
+                            success = true;
+                            Console.Clear();
+                            drawSquares(activeSquare, turn, squares);
+                            Thread.Sleep(1000);
                         }
                         else
                         {
@@ -363,7 +387,10 @@ namespace TicTacToeSquared
                 else if (turn == 2)
                     turn = 1;
                 else
+                {
                     Console.WriteLine("error-turn:" + turn);
+                    Console.Read();
+                }
             }
             Console.Clear();
             drawSquares(activeSquare, turn, squares);
@@ -379,6 +406,7 @@ namespace TicTacToeSquared
             else
             {
                 Console.WriteLine("error-winner");
+                Console.Read();
             }
             Console.ReadLine();
         }
@@ -663,95 +691,95 @@ namespace TicTacToeSquared
             {
                 activeSquare = 2;
             }
-            else if (squares[0, 0] == squares[3, 0] && squares[6, 0] > 3 && squares[0, 0] > 2)
+            else if (squares[0, 0] == squares[3, 0] && squares[6, 0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 6;
             }
-            else if (squares[0, 0] == squares[4, 0] && squares[8, 0] > 3 && squares[0, 0] > 2)
+            else if (squares[0, 0] == squares[4, 0] && squares[8, 0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 8;
             }
-            else if (squares[1, 0] == squares[2, 0] && squares[0, 0] > 3 && squares[1, 0] > 2)
+            else if (squares[1, 0] == squares[2, 0] && squares[0, 0] < 3 && squares[1, 0] > 2)
             {
                 activeSquare = 0;
             }
-            else if (squares[1, 0] == squares[4, 0] && squares[7, 0] > 3 && squares[1, 0] > 2)
+            else if (squares[1, 0] == squares[4, 0] && squares[7, 0] < 3 && squares[1, 0] > 2)
             {
                 activeSquare = 7;   
             }
-            else if (squares[2, 0] == squares[5, 0] && squares[8, 0] > 3 && squares[2, 0] > 2)
+            else if (squares[2, 0] == squares[5, 0] && squares[8, 0] < 3 && squares[2, 0] > 2)
             {
                 activeSquare = 8;
             }
-            else if (squares[2, 0] == squares[4, 0] && squares[6, 0] > 3 && squares[2, 0] > 2)
+            else if (squares[2, 0] == squares[4, 0] && squares[6, 0] < 3 && squares[2, 0] > 2)
             {
                 activeSquare = 6;
             }
-            else if (squares[3, 0] == squares[4, 0] && squares[5, 0] > 3 && squares[3, 0] > 2)
+            else if (squares[3, 0] == squares[4, 0] && squares[5, 0] < 3 && squares[3, 0] > 2)
             {
                 activeSquare = 5;
             }
-            else if (squares[3, 0] == squares[6, 0] && squares[0, 0] > 3 && squares[3, 0] > 2)
+            else if (squares[3, 0] == squares[6, 0] && squares[0, 0] < 3 && squares[3, 0] > 2)
             {
                 activeSquare = 0;
             }
-            else if (squares[4, 0] == squares[5, 0] && squares[3, 0] > 3 && squares[4, 0] > 2)
+            else if (squares[4, 0] == squares[5, 0] && squares[3, 0] < 3 && squares[4, 0] > 2)
             {
                 activeSquare = 3;
             }
-            else if (squares[4, 0] == squares[6, 0] && squares[2, 0] > 3 && squares[4, 0] > 2)
+            else if (squares[4, 0] == squares[6, 0] && squares[2, 0] < 3 && squares[4, 0] > 2)
             {
                 activeSquare = 2;
             }
-            else if (squares[4, 0] == squares[7, 0] && squares[1, 0] > 3 && squares[4, 0] > 2)
+            else if (squares[4, 0] == squares[7, 0] && squares[1, 0] < 3 && squares[4, 0] > 2)
             {
                 activeSquare = 1;
             }
-            else if (squares[4, 0] == squares[8, 0] && squares[0, 0] > 3 && squares[4, 0] > 2)
+            else if (squares[4, 0] == squares[8, 0] && squares[0, 0] < 3 && squares[4, 0] > 2)
             {
                 activeSquare = 0;
             }
-            else if (squares[5, 0] == squares[8, 0] && squares[2, 0] > 3 && squares[5, 0] > 2)
+            else if (squares[5, 0] == squares[8, 0] && squares[2, 0] < 3 && squares[5, 0] > 2)
             {
                 activeSquare = 2;
             }
-            else if (squares[6, 0] == squares[7, 0] && squares[8, 0] > 3 && squares[6, 0] > 2)
+            else if (squares[6, 0] == squares[7, 0] && squares[8, 0] < 3 && squares[6, 0] > 2)
             {
                 activeSquare = 8;
             }
-            else if (squares[7, 0] == squares[8, 0] && squares[6, 0] > 3 && squares[7, 0] > 2)
+            else if (squares[7, 0] == squares[8, 0] && squares[6, 0] < 3 && squares[7, 0] > 2)
             {
                 activeSquare = 6;
             }
-            else if (squares[0, 0] == squares[2, 0] && squares[1, 0] > 3 && squares[0, 0] > 2)
+            else if (squares[0, 0] == squares[2, 0] && squares[1, 0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 1;
             }
-            else if (squares[0, 0] == squares[6, 0] && squares[3, 0] > 3 && squares[0, 0] > 2)
+            else if (squares[0, 0] == squares[6, 0] && squares[3, 0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 3;
             }
-            else if (squares[2, 0] == squares[8, 0] && squares[5, 0] > 3 && squares[2, 0] > 2)
+            else if (squares[2, 0] == squares[8, 0] && squares[5, 0] < 3 && squares[2, 0] > 2)
             {
                 activeSquare = 5;
             }
-            else if (squares[0, 0] == squares[8, 0] && squares[4, 0] > 3 && squares[0, 0] > 2)
+            else if (squares[0, 0] == squares[8, 0] && squares[4, 0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 4;
             }
-            else if (squares[6, 0] == squares[8, 0] && squares[7, 0] > 3 && squares[6, 0] > 2)
+            else if (squares[6, 0] == squares[8, 0] && squares[7, 0] < 3 && squares[6, 0] > 2)
             {
                 activeSquare = 7;
             }
-            else if (squares[1, 0] == squares[7, 0] && squares[4, 0] > 3 && squares[1, 0] > 2)
+            else if (squares[1, 0] == squares[7, 0] && squares[4, 0] < 3 && squares[1, 0] > 2)
             {
                 activeSquare = 4;
             }
-            else if (squares[2, 0] == squares[6, 0] && squares[4, 0] > 3 && squares[2, 0] > 2)
+            else if (squares[2, 0] == squares[6, 0] && squares[4, 0] < 3 && squares[2, 0] > 2)
             {
                 activeSquare = 4;
             }
-            else if (squares[3, 0] == squares[5, 0] && squares[4, 0] > 3 && squares[3, 0] > 2)
+            else if (squares[3, 0] == squares[5, 0] && squares[4, 0] < 3 && squares[3, 0] > 2)
             {
                 activeSquare = 4;
             }
