@@ -12,14 +12,13 @@ namespace TicTacToeSquared
     {
         static void Main(string[] args)
         {
-            //Getting stuck on full square
-            //Game Draw
-            //Bot drawing on full square -- give 10 tries to bot
+            //give medium bot 10 tries
+            //game draw
             Random rnd = new Random();
             int[,] squares = new int[9, 9];
             int turn = 1, activeSquare = 9, userInput = 9, winner = 0, gameMode = 0, difficulty = 1;
             bool success = false, end = false, numPad = false, skip = false, animations = true;
-            string player1 = "JendaZeZatáčky", player2 = "BowlingovaKoule";
+            string player1 = "JendaZeZatáčky", player2 = "notset";
 
             Console.WriteLine("Choose gamemode: Singleplayer / Multiplayer");
             while(gameMode == 0)
@@ -46,7 +45,6 @@ namespace TicTacToeSquared
                     numPad = true;
                     difficulty = 2;
                 }
-
                 else
                 {
                     Console.WriteLine("Wrong input");
@@ -60,6 +58,19 @@ namespace TicTacToeSquared
                 Console.WriteLine(" - Střední    (2)");
 
                 difficulty = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    if (difficulty < 1 || difficulty > 2)
+                    {
+                        Console.WriteLine("Wrong input");
+                        difficulty = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Wrong input");
+                    difficulty = Convert.ToInt32(Console.ReadLine());
+                }
             }
 
             if (skip == false) 
@@ -72,7 +83,7 @@ namespace TicTacToeSquared
                 }
             }
 
-            if (skip == false)
+            if(skip == false)
             {
                 Console.WriteLine("Vyberte jméno hráče 1:");
                 player1 = Console.ReadLine();
@@ -93,6 +104,7 @@ namespace TicTacToeSquared
                     }
                 }
             }
+
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 9; j++)
@@ -100,10 +112,13 @@ namespace TicTacToeSquared
                     squares[i, j] = 0;
                 }
             }
+            //Getting stuck on full square
+            //Game Draw
 
             while (end == false)
             {
                 Console.Clear();
+                //Drawing Squares
                 drawSquares(activeSquare, turn, squares);
 
                 try
@@ -121,7 +136,8 @@ namespace TicTacToeSquared
                     if(gameMode == 1 && turn == 2) 
                     {
                         //Bot square select
-                        if(difficulty == 1)
+
+                        if (difficulty == 1)
                         {
                             activeSquare = rnd.Next(0, 9);
                         }
@@ -217,6 +233,7 @@ namespace TicTacToeSquared
                     success = false;
                     while (success == false)
                     {
+
                         if (turn == 1)
                             Console.WriteLine("Enter your move(X)");
                         else if (turn == 2)
@@ -255,7 +272,6 @@ namespace TicTacToeSquared
                                         userInput = 2; break;
                                 }
                             }
-
                             //Making move
                             if (squares[activeSquare, userInput] != 0)
                             {
@@ -269,7 +285,6 @@ namespace TicTacToeSquared
                         }
                     }
                 }
-
 
                 //Win
                 int i;
@@ -687,7 +702,7 @@ namespace TicTacToeSquared
         }
         public static void mediumDiffSquareSelect(int[,] squares, out int activeSquare)
         {
-            if (squares[0, 0] == squares[1,0] && squares[2,0] > 3 && squares[0, 0] > 2)
+            if (squares[0, 0] == squares[1,0] && squares[2,0] < 3 && squares[0, 0] > 2)
             {
                 activeSquare = 2;
             }
